@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#fcf8f2">
+    <meta name="description" content="Yuma, ton espace du quotidien adapté à ton humeur, tes routines et ton rythme.">
+    <title>Yuma — Moi</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#aujourdhui" aria-label="Yuma, Moi">
+          <span class="brand-mark" aria-hidden="true">Y</span><span>Yuma</span>
+        </a>
+        <div class="topbar-actions">
+          <button class="topbar-action calm-toggle" type="button" data-action="calm" aria-label="Activer le mode calme" aria-pressed="false">◈</button>
+          <button class="topbar-action" type="button" data-action="customize" aria-label="Personnaliser mon espace">⚙</button>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <section class="view active" id="view-aujourdhui" aria-labelledby="welcome-title">
+          <div class="page-heading home-heading">
+            <p class="eyebrow" id="today-date-label"></p>
+            <div class="welcome-title-row">
+              <h1 id="welcome-title">Bonjour</h1>
+              <span class="streak-badge" id="checkin-streak">0 jour</span>
+            </div>
+            <aside class="daily-quote" aria-label="Citation du jour">
+              <blockquote>« Ce n’est pas parce que les choses sont difficiles que nous n’osons pas ; c’est parce que nous n’osons pas qu’elles sont difficiles. »</blockquote>
+              <cite>Sénèque</cite>
+            </aside>
+          </div>
+
+          <section class="card checkin-overview-card" id="checkin-banner" aria-labelledby="home-checkin-title">
+            <header class="checkin-overview-heading">
+              <div>
+                <p class="eyebrow">Mon espace du jour</p>
+                <h2 id="home-checkin-title">Mon état du jour</h2>
+              </div>
+              <span class="checkin-banner-status" aria-live="polite"><span class="status-indicator" id="checkin-indicator"></span><span id="checkin-banner-text">À ton rythme</span></span>
+            </header>
+            <div class="checkin-summary" aria-live="polite">
+              <svg class="checkin-rings" id="checkin-rings" viewBox="0 0 120 120" role="img" aria-labelledby="checkin-ring-title checkin-ring-description">
+                <title id="checkin-ring-title">Tes repères du jour</title>
+                <desc id="checkin-ring-description">Aucune réponse enregistrée pour aujourd’hui.</desc>
+                <circle class="checkin-ring-track" cx="60" cy="60" r="52"></circle>
+                <circle class="checkin-ring-progress ring-mood" id="checkin-ring-mood" cx="60" cy="60" r="52"></circle>
+                <circle class="checkin-ring-track" cx="60" cy="60" r="39"></circle>
+                <circle class="checkin-ring-progress ring-energy" id="checkin-ring-energy" cx="60" cy="60" r="39"></circle>
+                <circle class="checkin-ring-track" cx="60" cy="60" r="26"></circle>
+                <circle class="checkin-ring-progress ring-sensory" id="checkin-ring-sensory" cx="60" cy="60" r="26"></circle>
+                <text class="checkin-ring-count" id="checkin-ring-count" x="60" y="58">0/3</text>
+                <text class="checkin-ring-caption" x="60" y="71">repères</text>
+              </svg>
+              <div class="checkin-progress-list" aria-label="Tes niveaux aujourd’hui">
+                <div class="checkin-progress-item mood-progress">
+                  <div class="checkin-progress-heading"><span>Humeur</span><strong id="home-checkin-mood">Pas renseignée</strong></div>
+                  <div class="checkin-progress-track" id="checkin-mood-progress" role="progressbar" aria-label="Humeur" aria-valuemin="0" aria-valuemax="5" aria-valuetext="Pas renseignée"><span></span></div>
+                </div>
+                <div class="checkin-progress-item energy-progress">
+                  <div class="checkin-progress-heading"><span>Énergie</span><strong id="home-checkin-energy">Pas renseignée</strong></div>
+                  <div class="checkin-progress-track" id="checkin-energy-progress" role="progressbar" aria-label="Énergie" aria-valuemin="0" aria-valuemax="5" aria-valuetext="Pas renseignée"><span></span></div>
+                </div>
+                <div class="checkin-progress-item sensory-progress">
+                  <div class="checkin-progress-heading"><span>Charge sensorielle</span><strong id="home-checkin-sensory">Pas renseignée</strong></div>
+                  <div class="checkin-progress-track" id="checkin-sensory-progress" role="progressbar" aria-label="Charge sensorielle" aria-valuemin="0" aria-valuemax="4" aria-valuetext="Pas renseignée"><span></span></div>
+                </div>
+              </div>
+            </div>
+            <section class="checkin-form" id="checkin-card" aria-label="Questions du jour">
+              <fieldset class="checkin-group">
+                <legend>Comment tu te sens ?</legend>
+                <div class="mood-options">
+                  <button class="choice-button mood-button" type="button" data-mood="difficile" aria-pressed="false"><span aria-hidden="true">☹</span><small>Difficile</small></button>
+                  <button class="choice-button mood-button" type="button" data-mood="bof" aria-pressed="false"><span aria-hidden="true">☹</span><small>Bof</small></button>
+                  <button class="choice-button mood-button" type="button" data-mood="neutre" aria-pressed="false"><span aria-hidden="true">⊙</span><small>Neutre</small></button>
+                  <button class="choice-button mood-button" type="button" data-mood="bien" aria-pressed="false"><span aria-hidden="true">☺</span><small>Bien</small></button>
+                  <button class="choice-button mood-button" type="button" data-mood="super" aria-pressed="false"><span aria-hidden="true">☻</span><small>Super</small></button>
+                </div>
+              </fieldset>
+              <div class="checkin-scales">
+                <fieldset class="checkin-group scale-group">
+                  <legend><span>Mon énergie</span><span class="selection-label" id="energy-label">Facultatif</span></legend>
+                  <div class="scale-options" role="group" aria-label="Niveau d’énergie de 1 à 5">
+                    <button class="scale-button" type="button" data-scale="energy" data-value="1" aria-label="Énergie très basse" aria-pressed="false"></button>
+                    <button class="scale-button" type="button" data-scale="energy" data-value="2" aria-label="Énergie basse" aria-pressed="false"></button>
+                    <button class="scale-button" type="button" data-scale="energy" data-value="3" aria-label="Énergie moyenne" aria-pressed="false"></button>
+                    <button class="scale-button" type="button" data-scale="energy" data-value="4" aria-label="Énergie bonne" aria-pressed="false"></button>
+                    <button class="scale-button" type="button" data-scale="energy" data-value="5" aria-label="Énergie haute" aria-pressed="false"></button>
+                  </div>
+                  <div class="scale-hints"><span>Basse</span><span>Haute</span></div>
+                </fieldset>
+                <fieldset class="checkin-group scale-group sensory-group">
+                  <legend><span>Mes sensations</span><span class="selection-label" id="sensory-label">Facultatif</span></legend>
+                  <div class="scale-options sensory-options" role="group" aria-label="Charge sensorielle de très légère à très forte">
+                    <button class="scale-button" type="button" data-scale="sensory" data-value="1" aria-label="Charge sensorielle très légère" aria-pressed="false"></button>
+                    <button class="scale-button" type="button" data-scale="sensory" data-value="2" aria-label="Charge sensorielle légère" aria-pressed="false"></button>
+                    <button class="scale-button" type="button" data-scale="sensory" data-value="3" aria-label="Charge sensorielle moyenne" aria-pressed="false"></button>
+                    <button class="scale-button" type="button" data-scale="sensory" data-value="4" aria-label="Charge sensorielle forte" aria-pressed="false"></button>
+                  </div>
+                  <div class="scale-hints"><span>Légères</span><span>Fortes</span></div>
+                </fieldset>
+              </div>
+              <p class="checkin-feedback" id="checkin-feedback" aria-live="polite"></p>
+              <button class="button button-primary save-checkin" id="save-checkin" type="button">Enregistrer mon point</button>
+            </section>
+            <span class="sr-only" id="today-checkin-status">à faire</span>
+            <span class="sr-only" id="today-routine-status">0 sur 5</span>
+            <span class="sr-only" id="today-journal-status">à écrire</span>
+          </section>
+
+          <div class="quick-actions" role="group" aria-label="Raccourcis">
+            <button type="button" data-action="timer">Minuteur</button>
+            <button class="quick-action-calm" type="button" data-action="calm">Mode calme</button>
+            <button type="button" data-action="write">Écrire</button>
+          </div>
+
+          <section class="home-carousel" aria-label="Mes repères du jour">
+            <div class="home-carousel-heading">
+              <span>Mes repères</span>
+            </div>
+            <div class="home-carousel-track" id="home-carousel-track" role="region" aria-label="Fais glisser pour parcourir tes repères" tabindex="0">
+              <section class="card personal-day-card home-carousel-slide" aria-labelledby="daily-focus-title" aria-label="1 sur 6 : Mon prochain pas">
+                <div class="personal-day-heading">
+                  <p class="eyebrow">À ton rythme</p>
+                  <h2 id="daily-focus-title">Mon prochain pas</h2>
+                </div>
+                <p class="day-tip" id="focus-suggestion" aria-live="polite">Choisis une intention simple, ou laisse cette journée ouverte.</p>
+                <form id="daily-focus-form">
+                  <label class="sr-only" for="daily-focus-input">Mon intention du jour</label>
+                  <input id="daily-focus-input" type="text" maxlength="140" placeholder="Aujourd’hui, j’aimerais…" autocomplete="off">
+                  <div class="composer-footer">
+                    <span id="focus-saved" aria-live="polite">À toi de choisir, sans pression.</span>
+                    <button class="button button-soft" type="submit">Garder</button>
+                  </div>
+                </form>
+              </section>
+              <section class="card daily-list-card home-carousel-slide" aria-labelledby="tasks-title" aria-label="2 sur 6 : Petits pas">
+                <div class="section-heading"><h2 id="tasks-title">Petits pas</h2><span class="routine-count" id="task-count">0/0</span></div>
+                <ul class="task-list" id="task-list"></ul>
+                <form class="add-task-form" id="add-task-form">
+                  <label class="sr-only" for="new-task">Ajouter un petit pas</label>
+                  <span aria-hidden="true">＋</span>
+                  <input id="new-task" type="text" maxlength="100" placeholder="Ajouter un petit pas…" autocomplete="off">
+                  <button type="submit">Ajouter</button>
+                </form>
+              </section>
+              <section class="card daily-list-card home-carousel-slide" aria-labelledby="toolbox-title" aria-label="3 sur 6 : Outils qui m’aident">
+                <div class="section-heading"><h2 id="toolbox-title">Outils qui m’aident</h2></div>
+                <ul class="toolbox-list" id="toolbox-list"></ul>
+                <form class="add-tool-form" id="new-tool-form">
+                  <label class="sr-only" for="new-tool">Ajouter un geste qui m’aide</label>
+                  <span aria-hidden="true">＋</span>
+                  <input id="new-tool" type="text" maxlength="80" placeholder="Ajouter un outil…" autocomplete="off">
+                  <button type="submit">Ajouter</button>
+                </form>
+              </section>
+              <section class="card routines-card daily-routines-card home-carousel-slide" aria-labelledby="today-routines-title" aria-label="4 sur 6 : Mes routines">
+                <div class="section-heading">
+                  <div><h2 id="today-routines-title">Mes routines</h2><p class="subtle-copy">Des repères, sans obligation.</p></div>
+                  <span class="routine-count" id="routine-count">0/5</span>
+                </div>
+                <div class="routine-progress" id="routine-progress" aria-label="0 routine cochée sur 5"><span id="routine-progress-fill"></span></div>
+                <ul class="home-routine-list">
+                  <li><label><input type="checkbox" data-routine="water"><span>Boire un grand verre d’eau</span></label><small>MATIN</small></li>
+                  <li><label><input type="checkbox" data-routine="food"><span>Manger quelque chose de chaud</span></label><small>MIDI</small></li>
+                  <li><label><input type="checkbox" data-routine="outside"><span>10 minutes dehors</span></label><small>MIDI</small></li>
+                  <li><label><input type="checkbox" data-routine="sensory"><span>Pause sensorielle</span></label><small>APRÈS-MIDI</small></li>
+                  <li><label><input type="checkbox" data-routine="screens"><span>Écrans coupés à 22h</span></label><small>SOIR</small></li>
+                </ul>
+                <div class="routine-foot"><span aria-hidden="true">♨</span><span id="streak-label">Chaque petit pas compte, même sans série.</span></div>
+                <button class="text-button" type="button" data-go="routines">Gérer mes routines ↗</button>
+              </section>
+              <section class="card coach-suggestion coach-preference-card home-carousel-slide" aria-labelledby="support-title" aria-label="5 sur 6 : Mon soutien préféré">
+                <div class="section-heading"><div><h2 id="support-title">Mon soutien préféré</h2><p class="subtle-copy">Tu peux changer ce choix à tout moment.</p></div></div>
+                <label class="sr-only" for="support-preference">Choisir le type de soutien souhaité</label>
+                <select id="support-preference" class="support-preference">
+                  <option value="souple">Laisser ma journée ouverte</option>
+                  <option value="petit-pas">Commencer par un petit pas</option>
+                  <option value="priorite">Choisir une seule priorité</option>
+                  <option value="pause">Faire une pause</option>
+                  <option value="calme">Réduire les stimulations</option>
+                </select>
+                <p class="suggestion-text" id="coach-suggestion-text" aria-live="polite">Choisis ce qui te serait utile.</p>
+                <button class="button button-white" type="button" data-go="coach">Ouvrir le coach</button>
+              </section>
+              <section class="card reflection-card daily-reflection-card home-carousel-slide" aria-labelledby="reflection-title" aria-label="6 sur 6 : Mon petit bilan">
+                <div class="section-heading"><h2 id="reflection-title">Mon petit bilan</h2></div>
+                <form id="reflection-form">
+                  <label for="reflection-helped">Qu’est-ce qui m’a aidé aujourd’hui ?</label>
+                  <textarea id="reflection-helped" maxlength="240" rows="2" placeholder="Même une toute petite chose…"></textarea>
+                  <label for="reflection-proud">De quoi suis-je fier·e, à ma façon ?</label>
+                  <textarea id="reflection-proud" maxlength="240" rows="2" placeholder="Tout ce qui compte pour toi."></textarea>
+                  <div class="composer-footer">
+                    <span id="reflection-saved">Ce bilan reste sur cet appareil.</span>
+                    <button class="button button-soft" type="submit">Garder</button>
+                  </div>
+                </form>
+              </section>
+            </div>
+            <div class="home-carousel-pagination" id="home-carousel-pagination">
+              <div class="carousel-pagination" id="carousel-pagination" role="group" aria-label="Choisir un repère">
+                <button type="button" aria-label="Mon prochain pas" aria-current="true"></button>
+                <button type="button" aria-label="Petits pas" aria-current="false"></button>
+                <button type="button" aria-label="Outils qui m’aident" aria-current="false"></button>
+                <button type="button" aria-label="Mes routines" aria-current="false"></button>
+                <button type="button" aria-label="Mon soutien préféré" aria-current="false"></button>
+                <button type="button" aria-label="Mon petit bilan" aria-current="false"></button>
+              </div>
+            </div>
+          </section>
+
+        </section>
+
+        <section class="view" id="view-journal" aria-labelledby="journal-title" hidden>
+          <div class="page-heading">
+            <p class="eyebrow">Un espace rien qu’à toi</p>
+            <h1 id="journal-title">Journal</h1>
+            <p class="intro">Ce qui s’est passé, ce qui t’a aidé, ce qui a pesé. Personne d’autre ne le lit.</p>
+          </div>
+          <section class="card notes-card">
+            <div class="section-heading">
+              <div><h2>Notes rapides</h2><p class="subtle-copy">Un rappel ou une pensée à garder pour toi.</p></div>
+              <span class="notes-status" id="notes-saved" aria-live="polite">Enregistré sur cet appareil</span>
+            </div>
+            <label class="sr-only" for="quick-notes">Écrire une note</label>
+            <textarea id="quick-notes" maxlength="2000" rows="5" placeholder="Une idée, un rappel, ou juste quelques mots…"></textarea>
+            <div class="notes-footer"><span>Privé, enregistré automatiquement.</span><span id="notes-length">0 / 2000</span></div>
+          </section>
+          <form class="card journal-composer" id="journal-form">
+            <label for="journal-input">Comment se passe ta journée ?</label>
+            <textarea id="journal-input" maxlength="2000" rows="5" placeholder="Écris autant ou aussi peu que tu veux…"></textarea>
+            <div class="composer-footer"><span>Aucun jugement, aucun score.</span><button class="button button-soft" type="submit">➤ &nbsp; Garder</button></div>
+          </form>
+          <div class="journal-entries" id="journal-entries" aria-live="polite"></div>
+          <p class="privacy-note">Tes entrées de journal restent sur cet appareil.</p>
+        </section>
+
+        <section class="view" id="view-routines" aria-labelledby="routine-page-title" hidden>
+          <div class="page-heading routine-page-heading">
+            <p class="eyebrow">Des repères, pas des règles</p>
+            <h1 id="routine-page-title">Mes routines</h1>
+            <p class="intro">Garde ce qui t’aide. Adapte le reste, à ton rythme.</p>
+            <button class="text-button" type="button" data-go="aujourdhui">← Retour à Moi</button>
+          </div>
+          <div class="routine-grid">
+            <article class="card routine-template-card">
+              <span class="routine-icon morning-icon" aria-hidden="true">☼</span>
+              <p class="eyebrow">Quand tu te réveilles</p>
+              <h2>Un début en douceur</h2>
+              <ul class="routine-template-list">
+                <li><label><input type="checkbox" data-routine-template="morning-1"> Boire un verre d’eau</label></li>
+                <li><label><input type="checkbox" data-routine-template="morning-2"> Ouvrir les rideaux</label></li>
+                <li><label><input type="checkbox" data-routine-template="morning-3"> Choisir une priorité</label></li>
+              </ul>
+              <button class="text-button reset-template" data-reset-template="morning" type="button">Réinitialiser</button>
+            </article>
+            <article class="card routine-template-card">
+              <span class="routine-icon evening-icon" aria-hidden="true">☾</span>
+              <p class="eyebrow">Quand la journée ralentit</p>
+              <h2>Se préparer au repos</h2>
+              <ul class="routine-template-list">
+                <li><label><input type="checkbox" data-routine-template="evening-1"> Noter ce qui est fait</label></li>
+                <li><label><input type="checkbox" data-routine-template="evening-2"> Préparer une chose pour demain</label></li>
+                <li><label><input type="checkbox" data-routine-template="evening-3"> Baisser la lumière</label></li>
+              </ul>
+              <button class="text-button reset-template" data-reset-template="evening" type="button">Réinitialiser</button>
+            </article>
+          </div>
+          <p class="privacy-note">Ces routines et tes coches restent enregistrées uniquement sur cet appareil.</p>
+        </section>
+
+        <section class="view" id="view-forum" aria-labelledby="forum-title" hidden>
+          <div class="page-heading forum-heading">
+            <div><p class="eyebrow">On se comprend, on s’entraide</p><h1 id="forum-title">Le fil</h1><p class="intro">Des moments du quotidien, des idées et du soutien, à partager sans pression.</p></div>
+          </div>
+          <aside class="community-notice" aria-label="Information sur le prototype">
+            <span aria-hidden="true">♡</span>
+            <p><strong>Un espace pour faire lien.</strong> Dans cette version de démonstration, tes publications, réactions et réponses restent privées sur cet appareil.</p>
+          </aside>
+          <section class="stories-strip" aria-label="Profils du fil">
+            <button class="story-button" type="button" data-story-author="__create__">
+              <span class="story-ring own-story"><span class="story-avatar">A<span class="story-add" aria-hidden="true">+</span></span></span>
+              <span>Ta story</span>
+            </button>
+            <button class="story-button" type="button" data-story-author="Camille">
+              <span class="story-ring"><span class="story-avatar story-lilac">C</span></span>
+              <span>Camille</span>
+            </button>
+            <button class="story-button" type="button" data-story-author="Sacha">
+              <span class="story-ring"><span class="story-avatar story-sage">S</span></span>
+              <span>Sacha</span>
+            </button>
+            <button class="story-button" type="button" data-story-author="Noa">
+              <span class="story-ring"><span class="story-avatar story-peach">N</span></span>
+              <span>Noa</span>
+            </button>
+            <button class="story-button" type="button" data-story-author="Morgan">
+              <span class="story-ring"><span class="story-avatar story-yellow">M</span></span>
+              <span>Morgan</span>
+            </button>
+            <button class="story-button" type="button" data-story-author="Lou">
+              <span class="story-ring"><span class="story-avatar story-blue">L</span></span>
+              <span>Lou</span>
+            </button>
+          </section>
+          <form class="card social-composer" id="new-post-form">
+            <div class="composer-profile"><span class="profile-avatar own-avatar">A</span><span>Un petit mot à partager ?</span></div>
+            <div class="composer-modes" role="group" aria-label="Type de publication">
+              <button class="composer-mode active" type="button" data-post-mode="publication" aria-pressed="true">✎ &nbsp; Publication</button>
+              <button class="composer-mode" type="button" data-post-mode="meme" aria-pressed="false">✦ &nbsp; Créer un mème</button>
+            </div>
+            <label class="sr-only" for="post-content">Écrire une publication</label>
+            <textarea id="post-content" maxlength="500" rows="3" placeholder="Une victoire, une question, ou juste comment tu te sens…"></textarea>
+            <div class="meme-editor" id="meme-editor" hidden>
+              <label for="meme-template">Modèle</label>
+              <select id="meme-template">
+                <option value="petit-pas">Le petit pas compte</option>
+                <option value="cerveau">Mon cerveau a son propre programme</option>
+                <option value="pause">La pause était le plan</option>
+              </select>
+              <label for="meme-top">Texte du haut</label>
+              <input id="meme-top" type="text" maxlength="90" placeholder="Quand je fais une toute petite tâche…">
+              <label for="meme-bottom">Texte du bas</label>
+              <input id="meme-bottom" type="text" maxlength="90" placeholder="…et que je la compte quand même comme une victoire">
+              <div class="meme-preview" id="meme-preview" data-template="petit-pas" aria-live="polite">
+                <span class="meme-sparkle" aria-hidden="true">✦</span>
+                <p class="meme-preview-top">Quand je fais une toute petite tâche…</p>
+                <span class="meme-preview-divider" aria-hidden="true">✳</span>
+                <p class="meme-preview-bottom">…et que je la compte quand même comme une victoire</p>
+              </div>
+              <p class="meme-note">Un mème original, personnalisable et sans image externe.</p>
+            </div>
+            <div class="composer-footer">
+              <label class="category-select-label" for="post-category">Sujet
+                <select id="post-category"><option>Astuces</option><option>Organisation</option><option>Sensoriel</option><option>Énergie</option><option>Humeur</option><option>Mèmes</option></select>
+              </label>
+              <button class="button button-primary" type="submit">Partager</button>
+            </div>
+          </form>
+          <div class="feed-heading"><h2>Pour toi</h2><span>Des idées à garder, le reste peut défiler.</span></div>
+          <div class="category-list" role="group" aria-label="Filtrer les publications">
+            <button class="category-button active" type="button" data-category="Tout">Pour toi</button>
+            <button class="category-button" type="button" data-category="Astuces">Astuces</button>
+            <button class="category-button" type="button" data-category="Organisation">Organisation</button>
+            <button class="category-button" type="button" data-category="Sensoriel">Sensoriel</button>
+            <button class="category-button" type="button" data-category="Énergie">Énergie</button>
+            <button class="category-button" type="button" data-category="Humeur">Humeur</button>
+            <button class="category-button" type="button" data-category="Mèmes">Mèmes</button>
+          </div>
+          <div class="forum-list" id="forum-list"></div>
+          <p class="privacy-note">Les publications proposées pour découvrir le fil sont des exemples. Aucun contenu n’est transmis ni visible par d’autres personnes pour le moment.</p>
+        </section>
+
+        <section class="view" id="view-coach" aria-labelledby="coach-title" hidden>
+          <div class="page-heading">
+            <p class="eyebrow">Un pas à la fois</p>
+            <h1 id="coach-title">Coach <span class="sparkle" aria-hidden="true">✧</span></h1>
+            <p class="intro">Un espace de réflexion, sans pression ni jugement.</p>
+          </div>
+          <div class="coach-chat card">
+            <div class="coach-intro-message">Pas encore de conversation. Tu peux commencer par une de ces phrases :</div>
+            <div class="prompt-list">
+              <button type="button" data-prompt="Je n’arrive pas à démarrer ma journée">Je n’arrive pas à démarrer ma journée</button>
+              <button type="button" data-prompt="Comment gérer une surcharge sensorielle ?">Comment gérer une surcharge sensorielle ?</button>
+              <button type="button" data-prompt="Aide-moi à choisir ma priorité du jour">Aide-moi à choisir ma priorité du jour</button>
+            </div>
+            <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+          </div>
+          <form class="card coach-composer" id="coach-form">
+            <label class="sr-only" for="coach-input">Écrire au coach</label>
+            <input id="coach-input" type="text" maxlength="240" placeholder="Écris ce qui te traverse…">
+            <button type="submit" aria-label="Envoyer au coach">➤</button>
+          </form>
+          <p class="privacy-note">Coach de démonstration : les réponses sont des suggestions prédéfinies, pas des conseils médicaux. Tes messages restent sur cet appareil.</p>
+        </section>
+
+        <section class="view" id="view-progres" aria-labelledby="progress-title" hidden>
+          <div class="page-heading">
+            <p class="eyebrow">Yuma</p>
+            <h1 id="progress-title">Progrès</h1>
+            <p class="intro">Pas une note. Juste la forme de tes journées, vue de plus haut.</p>
+          </div>
+          <div class="stats-grid">
+            <article class="card stat-card"><strong id="days-tracked">0</strong><span>Jours suivis</span></article>
+            <article class="card stat-card"><strong id="average-mood">—</strong><span>Humeur moyenne</span></article>
+            <article class="card stat-card"><strong id="average-energy">—</strong><span>Énergie moyenne</span></article>
+            <article class="card stat-card"><strong id="journal-count">0</strong><span>Entrées de journal</span></article>
+          </div>
+          <section class="card chart-card" aria-labelledby="chart-title">
+            <div class="chart-heading"><h2 id="chart-title">Humeur &amp; énergie</h2><div class="chart-legend"><span><i class="legend-mood"></i> Humeur</span><span><i class="legend-energy"></i> Énergie</span></div></div>
+            <div class="chart-wrap" id="chart-wrap"></div>
+            <p class="chart-empty" id="chart-empty">Encore quelques check-ins et la courbe apparaîtra ici.</p>
+          </section>
+          <section class="card days-card">
+            <h2>Tes 14 derniers jours</h2>
+            <div class="days-track" id="days-track"></div>
+            <p class="subtle-copy" id="days-summary">0 jour sur 14 avec un check-in.</p>
+          </section>
+          <p class="privacy-note">Ces repères sont là pour t’aider à observer, jamais pour te noter. Données stockées sur cet appareil.</p>
+        </section>
+      </main>
+
+      <nav class="mobile-nav" aria-label="Navigation principale">
+        <button class="nav-link active" data-view="aujourdhui" aria-current="page"><span class="nav-icon" aria-hidden="true">◉</span><span>Moi</span></button>
+        <button class="nav-link" data-view="journal"><span class="nav-icon" aria-hidden="true">▤</span><span>Journal</span></button>
+        <button class="nav-link" data-view="forum"><span class="nav-icon" aria-hidden="true">▢</span><span>Forum</span></button>
+        <button class="nav-link" data-view="coach"><span class="nav-icon" aria-hidden="true">✧</span><span>Coach</span></button>
+        <button class="nav-link" data-view="progres"><span class="nav-icon" aria-hidden="true">⌁</span><span>Progrès</span></button>
+      </nav>
+    </div>
+
+    <dialog class="action-dialog focus-dialog" id="focus-dialog" aria-labelledby="focus-dialog-title">
+      <div class="dialog-header">
+        <div><p class="eyebrow">Un petit pas, sans pression</p><h2 id="focus-dialog-title">Mon minuteur</h2></div>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="Fermer">×</button>
+      </div>
+      <p class="subtle-copy">Choisis une durée et une tâche si tu veux. Tu peux aussi juste commencer, ou t’arrêter avant la fin.</p>
+      <label class="dialog-label" for="focus-duration">Durée (1 à 180 minutes)</label>
+      <input class="dialog-input focus-duration-input" id="focus-duration" type="number" min="1" max="180" step="1" value="10" inputmode="numeric" required>
+      <label class="dialog-label" for="focus-task">Sur quoi aimerais-tu avancer ?</label>
+      <input class="dialog-input" id="focus-task" type="text" maxlength="120" placeholder="Une tâche, même minuscule…">
+      <div class="focus-coach-note" aria-live="polite">
+        <span aria-hidden="true">✧</span>
+        <p><strong>Un conseil pour toi</strong><span id="focus-advice">Choisis une petite étape adaptée au temps dont tu disposes. Tu peux t’arrêter dès que tu en as assez fait.</span></p>
+      </div>
+      <div class="focus-timer" role="timer" aria-live="off"><span id="focus-timer">10:00</span><small id="focus-timer-status" aria-live="polite">Prêt quand tu l’es</small></div>
+      <div class="dialog-actions">
+        <button class="button button-primary" id="focus-start" type="button">Commencer</button>
+        <button class="button button-soft" id="focus-reset" type="button">Réinitialiser</button>
+      </div>
+      <p class="dialog-footnote">Les conseils sont adaptés à ton check-in et fonctionnent sans connexion à un service d’IA.</p>
+    </dialog>
+
+    <dialog class="action-dialog calm-dialog" id="calm-dialog" aria-labelledby="calm-dialog-title">
+      <div class="dialog-header">
+        <div><p class="eyebrow">Tu peux prendre ton temps</p><h2 id="calm-dialog-title">On se recentre</h2></div>
+        <button class="dialog-close" type="button" data-close-dialog aria-label="Fermer">×</button>
+      </div>
+      <p class="subtle-copy">Rien à réussir ici. Choisis une seule proposition, ou ferme la fenêtre quand tu veux.</p>
+      <section class="grounding-card" aria-labelledby="grounding-title">
+        <span class="grounding-step" id="grounding-count">1 / 5</span>
+        <h3 id="grounding-title">Reviens doucement à ce qui t’entoure</h3>
+        <p id="grounding-prompt" aria-live="polite">Repère une chose que tu peux voir. Laisse simplement ton regard s’y poser.</p>
+        <button class="text-button" id="grounding-next" type="button">Passer à l’étape suivante</button>
+      </section>
+      <section class="calm-breath-section" aria-label="Respiration guidée">
+        <div class="calm-breath-orb" id="calm-breath-orb" aria-hidden="true"><span></span></div>
+        <p id="calm-breath-caption" aria-live="polite">Ou suis doucement le rythme du cercle.</p>
+        <button class="button button-soft" id="calm-breath-button" type="button">Lancer une minute de respiration</button>
+        <span class="calm-breath-time" id="calm-breath-time" aria-live="off"></span>
+      </section>
+    </dialog>
+
+    <script src="app.js" defer></script>
+    <script>
+      if ("serviceWorker" in navigator && location.protocol !== "file:") {
+        window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js"));
+      }
+    </script>
+  </body>
+</html>
